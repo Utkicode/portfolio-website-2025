@@ -1,0 +1,108 @@
+/* Global Reset */
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: all 0.3s ease-in-out;
+}
+
+/* Tailwind CSS */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Default Theme */
+.default {
+  --bg-color: rgb(244, 118, 8);
+  --text-color: black;
+  --card-bg-color: white;
+  --input-bg-color: #f9f9f9;
+  --input-text-color: black;
+}
+
+/* Dark Theme */
+.dark {
+  --bg-color: #1a202c;
+  --text-color: white;
+  --card-bg-color: #2d3748;
+  --input-bg-color: #4a5568;
+  --input-text-color: white;
+}
+
+/* Blue Theme */
+.blue {
+  --bg-color: rgb(9, 9, 241);
+  --text-color: white;
+  --card-bg-color: #1e3a8a;
+  --input-bg-color: #2b6cb0;
+  --input-text-color: white;
+}
+
+/* Pink Theme */
+.pink {
+  --bg-color: rgb(170, 51, 106);
+  --text-color: white;
+  --card-bg-color: #742a48;
+  --input-bg-color: #a04566;
+  --input-text-color: white;
+}
+
+/* Apply Theme Variables */
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: all 0.3s ease-in-out;
+}
+
+.card {
+  background-color: var(--card-bg-color);
+  color: var(--card-text-color);
+}
+
+input, textarea {
+  background-color: var(--input-bg-color);
+  color: var(--input-text-color);
+}
+
+:root {
+  --bg-color: #f5f5f5;
+  --text-color: #333;
+  --button-bg: #4caf50;
+  --button-text: #ffffff;
+  --button-border: #388e3c; /* Darker shade for light themes */
+
+  --button-bg-alt: #2196f3;
+  --button-border-alt: #1976d2; /* Darker shade for light themes */
+}
+
+.dark-theme {
+  --bg-color: #121212;
+  --text-color: #ffffff;
+  --button-bg: #81c784; /* Lighter shade for dark themes */
+  --button-text: #000000;
+  --button-border: #388e3c;
+
+  --button-bg-alt: #64b5f6; /* Lighter alternative shade for dark themes */
+  --button-border-alt: #1976d2;
+}
+
+:root {
+  --text-color: #333;
+
+  /* Light Theme Gradients */
+  --gradient-bg: linear-gradient(135deg, #f8b500, #f54ea2);
+  --gradient-button: linear-gradient(45deg, #ff9f43, #ff6b81);
+  --gradient-button-alt: linear-gradient(45deg, #fbc2eb, #a18cd1);
+}
+
+.dark-theme {
+  --text-color: #ffffff;
+
+  /* Dark Theme Gradients */
+  --gradient-bg: linear-gradient(135deg, #1e3a8a, #2c2c54);
+  --gradient-button: linear-gradient(45deg, #81c784, #66bb6a);
+  --gradient-button-alt: linear-gradient(45deg, #64b5f6, #42a5f5);
+}
