@@ -1,53 +1,48 @@
-import { FiSettings } from "react-icons/fi";
-import { useState } from "react";
+import React, { useState, useContext } from 'react';
+import { ThemeContext } from '../context/ThemeContext';
+import { FaPalette } from 'react-icons/fa';
 
 const ThemeSwitcher = () => {
+  const { currentTheme, themes, toggleTheme } = useContext(ThemeContext);
   const [isOpen, setIsOpen] = useState(false);
 
-  const handleThemeChange = (theme) => {
-    // Set the theme class on the body
-    document.body.className = theme;
-    localStorage.setItem("theme", theme); // Store the theme in localStorage
+  const themeColors = {
+    light: 'bg-white text-gray-900',
+    dark: 'bg-gray-900 text-white',
+    pastelBlue: 'bg-blue-100 text-blue-900',
+    pastelPink: 'bg-pink-100 text-pink-900',
+    pastelGreen: 'bg-green-100 text-green-900',
+    pastelPurple: 'bg-purple-100 text-purple-900',
   };
 
   return (
-    <div className="fixed top-1/2 right-5 transform -translate-y-1/2 z-50">
-      {/* Gear Button */}
+    <div className="fixed top-4 right-4 z-[100]">
       <button
-        className="p-3 bg-gray-800 text-white rounded-full shadow-lg hover:bg-gray-600"
         onClick={() => setIsOpen(!isOpen)}
+        className={`p-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 ${
+          themeColors[currentTheme]
+        }`}
+        aria-label="Theme switcher"
       >
-        <FiSettings size={24} />
+        <FaPalette className="w-6 h-6" />
       </button>
 
-      {/* Theme Options */}
       {isOpen && (
-        <div className="mt-4 bg-white shadow-md rounded-lg p-4 flex flex-col space-y-2">
-          <button
-            className="bg-orange-400 text-white py-2 px-4 rounded hover:bg-orange-600"
-            onClick={() => handleThemeChange("default")}
-          >
-            Default
-          </button>
-          <button
-            className="bg-gray-600 text-white py-2 px-4 rounded hover:bg-gray-800"
-            onClick={() => handleThemeChange("dark")}
-          >
-            Dark
-          </button>
-          <button
-            className="bg-blue-400 text-white py-2 px-4 rounded hover:bg-blue-600"
-            onClick={() => handleThemeChange("blue")}
-          >
-            Blue
-          </button>
-
-          <button
-            className="bg-pink-400 text-white py-2 px-4 rounded hover:bg-pink-600"
-            onClick={() => handleThemeChange("pink")}
-          >
-            Pink
-          </button>
+        <div className="absolute right-0 mt-2 w-48 rounded-lg shadow-xl overflow-hidden">
+          {Object.entries(themes).map(([key, theme]) => (
+            <button
+              key={key}
+              onClick={() => {
+                toggleTheme(key);
+                setIsOpen(false);
+              }}
+              className={`w-full px-4 py-2 text-left hover:bg-opacity-80 transition-colors duration-200 ${
+                themeColors[key]
+              } ${currentTheme === key ? 'ring-2 ring-blue-500' : ''}`}
+            >
+              {theme.name}
+            </button>
+          ))}
         </div>
       )}
     </div>

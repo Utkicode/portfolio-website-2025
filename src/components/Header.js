@@ -1,117 +1,176 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { FaPalette } from "react-icons/fa";
+import { ThemeContext } from "../context/ThemeContext";
 
 const Header = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [theme, setTheme] = useState("default");
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState("");
+  const location = useLocation();
+  const navigate = useNavigate();
+  const { currentTheme, themes, toggleTheme } = useContext(ThemeContext);
+  const theme = themes[currentTheme];
 
   useEffect(() => {
-    const storedTheme = localStorage.getItem("theme") || "default"; // Default to "default"
-    setTheme(storedTheme);
-    document.body.className = storedTheme; // Apply the theme to the body
+    const handleScroll = () => {
+      const sections = ["home", "about", "skills", "projects", "contact"];
+      const currentSection = sections.find((section) => {
+        const element = document.getElementById(section);
+        if (element) {
+          const rect = element.getBoundingClientRect();
+          return rect.top <= 100 && rect.bottom >= 100;
+        }
+        return false;
+      });
+      setActiveSection(currentSection || "");
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const toggleTheme = () => {
-    const newTheme = theme === "default" ? "dark" : "default";
-    setTheme(newTheme);
-    localStorage.setItem("theme", newTheme);
-    document.body.className = newTheme;
+  const handleNavClick = (e, section) => {
+    e.preventDefault();
+    if (location.pathname === "/") {
+      const element = document.getElementById(section);
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+        setActiveSection(section);
+      }
+    } else {
+      navigate("/", { state: { scrollTo: section } });
+    }
+    setIsMenuOpen(false);
   };
 
-  const handleNavItemClick = () => {
-    setIsOpen(false); // Close the hamburger menu
-  };
+  const navLinks = [
+    { name: "Home", section: "home" },
+    { name: "About", section: "about" },
+    { name: "Skills", section: "skills" },
+    { name: "Projects", section: "projects" },
+    { name: "Why Consulting", path: "/why-consulting" },
+    { name: "Case Studies", path: "/case-studies" },
+    { name: "Contact", section: "contact" },
+  ];
 
   return (
-    <header
-      className={`fixed top-0 left-0 w-full z-50 py-4 px-6 shadow-lg transition-all backdrop-blur-md ${
-        theme === "dark"
-          ? "bg-gradient-to-r from-gray-800 via-purple-800 to-gray-800 text-gray-100"
-          : "bg-gradient-to-r from-pink-100 via-white to-purple-100 text-gray-900"
-      }`}
-      style={{
-        boxShadow: "0px 10px 20px rgba(0, 0, 0, 0.3)",
-        transform: "translateZ(0) perspective(1000px)",
-      }}
-    >
-      <div className="container mx-auto flex items-center justify-between">
-        {/* Custom Logo with Glowing Gradient Effect */}
-        <div
-          className={`text-3xl font-extrabold transform transition-transform ${
-            theme === "dark"
-              ? "text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-purple-500"
-              : "text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-purple-600"
-          }`}
-          style={{
-            textShadow: theme === "dark"
-              ? "0px 0px 15px rgba(255, 255, 255, 0.4)"
-              : "0px 0px 15px rgba(0, 0, 0, 0.2)",
-          }}
-        >
-          <a href="#home">U</a>
-        </div>
+    <header className={`fixed top-0 left-0 right-0 z-50 ${theme.colors.primary} shadow-md`}>
+      <div className="container mx-auto px-4">
+        <div className="flex justify-between items-center h-16">
+          <Link to="/" className={`text-2xl font-bold ${theme.colors.accent}`}>
+            Utkarsh Gupta
+          </Link>
 
-        {/* Hamburger Menu (Mobile View) */}
-        <div className="sm:hidden">
-          <button
-            onClick={() => setIsOpen(!isOpen)}
-            className="focus:outline-none"
-          >
-            <svg
-              className="w-6 h-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex items-center space-x-8">
+            <nav className="flex items-center space-x-6">
+              {navLinks.map((link) => (
+                link.section ? (
+                  <a
+                    key={link.name}
+                    href={`#${link.section}`}
+                    onClick={(e) => handleNavClick(e, link.section)}
+                    className={`${
+                      activeSection === link.section
+                        ? theme.colors.accent
+                        : theme.colors.text
+                    } hover:${theme.colors.accent} transition-colors`}
+                  >
+                    {link.name}
+                  </a>
+                ) : (
+                  <Link
+                    key={link.name}
+                    to={link.path}
+                    className={`${theme.colors.text} hover:${theme.colors.accent} transition-colors`}
+                  >
+                    {link.name}
+                  </Link>
+                )
+              ))}
+            </nav>
+            <button
+              onClick={toggleTheme}
+              className={`w-10 h-10 rounded-full flex items-center justify-center ${theme.colors.secondary} hover:${theme.colors.accent} transition-all duration-300 transform hover:scale-110`}
+              aria-label="Toggle theme"
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d={isOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"}
-              />
-            </svg>
-          </button>
+              <FaPalette className="w-5 h-5 text-gray-600" />
+            </button>
+          </div>
+
+          {/* Mobile Menu Button */}
+          <div className="md:hidden flex items-center space-x-4">
+            <button
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className={`w-10 h-10 rounded-full flex items-center justify-center ${theme.colors.secondary} hover:${theme.colors.accent} transition-all duration-300`}
+            >
+              <svg
+                className="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                {isMenuOpen ? (
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                ) : (
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M4 6h16M4 12h16M4 18h16"
+                  />
+                )}
+              </svg>
+            </button>
+          </div>
         </div>
 
-        {/* Navigation Links */}
-        <nav
-          className={`${
-            isOpen ? "block" : "hidden"
-          } absolute top-16 left-0 w-full sm:static sm:block sm:w-auto`}
-        >
-          <ul className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-8 text-lg font-medium">
-            {["Home", "About", "Skills", "Projects", "Contact"].map((item) => (
-              <li key={item}>
-                <a
-                  href={`#${item.toLowerCase()}`}
-                  className={`block px-4 py-2 rounded transition-all ${
-                    theme === "dark"
-                      ? "hover:text-transparent hover:bg-clip-text hover:bg-gradient-to-r hover:from-pink-400 hover:to-purple-500"
-                      : "hover:text-transparent hover:bg-clip-text hover:bg-gradient-to-r hover:from-pink-500 hover:to-purple-600"
-                  }`}
-                  onClick={handleNavItemClick}
+        {/* Mobile Navigation */}
+        {isMenuOpen && (
+          <nav className="md:hidden absolute top-16 left-0 right-0 bg-white dark:bg-gray-900 shadow-lg">
+            <div className="container mx-auto px-4 py-4">
+              <div className="flex flex-col space-y-4">
+                {navLinks.map((link) => (
+                  link.section ? (
+                    <a
+                      key={link.name}
+                      href={`#${link.section}`}
+                      onClick={(e) => handleNavClick(e, link.section)}
+                      className={`${
+                        activeSection === link.section
+                          ? theme.colors.accent
+                          : theme.colors.text
+                      } hover:${theme.colors.accent} transition-colors py-2`}
+                    >
+                      {link.name}
+                    </a>
+                  ) : (
+                    <Link
+                      key={link.name}
+                      to={link.path}
+                      className={`${theme.colors.text} hover:${theme.colors.accent} transition-colors py-2`}
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      {link.name}
+                    </Link>
+                  )
+                ))}
+                <button
+                  onClick={toggleTheme}
+                  className={`w-10 h-10 rounded-full flex items-center justify-center ${theme.colors.secondary} hover:${theme.colors.accent} transition-all duration-300 transform hover:scale-110`}
+                  aria-label="Toggle theme"
                 >
-                  {item}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </nav>
-
-        {/* Theme Switcher */}
-        <button
-          onClick={toggleTheme}
-          className={`ml-4 w-10 h-10 rounded-full flex items-center justify-center transition-all ${
-            theme === "dark"
-              ? "bg-gradient-to-r from-gray-800 to-gray-700 text-white"
-              : "bg-gradient-to-r from-pink-200 to-purple-300 text-gray-900"
-          }`}
-          style={{
-            boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
-          }}
-        >
-          {theme === "dark" ? "☀️" : "🌙"}
-        </button>
+                  <FaPalette className="w-5 h-5 text-gray-600" />
+                </button>
+              </div>
+            </div>
+          </nav>
+        )}
       </div>
     </header>
   );

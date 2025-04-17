@@ -1,64 +1,42 @@
 import React from "react";
+import { motion } from "framer-motion";
 
-const About = ({ theme }) => {
+const About = () => {
   return (
-    <section
-      id="about"
-      className={`py-20 ${
-        theme === "dark" ? "bg-gray-900 text-gray-100" : "bg-gray-100 text-gray-900"
-      }`}
-    >
-      <div className="container mx-auto flex flex-col lg:flex-row items-center gap-10 px-5">
-        {/* Profile Picture */}
-        <div className="flex-shrink-0">
-          <img
-            src="/images/Profile.png"
-            alt="Profile"
-            className="rounded-lg shadow-lg w-64 h-64 object-cover mx-auto lg:mx-0"
-          />
-        </div>
+    <section id="about" className="py-20 px-4">
+      <div className="max-w-4xl mx-auto">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="text-center mb-12"
+        >
+          <h2 className="text-4xl font-bold mb-6">About Me</h2>
+          <div className="w-24 h-1 bg-blue-600 mx-auto"></div>
+        </motion.div>
 
-        {/* About Text */}
-        <div className="text-center lg:text-left">
-          <h2 className="text-4xl font-bold mb-4">About Me</h2>
-          <p className="mb-6">
-            Hi! My name is{" "}
-            <span
-              className={`font-semibold ${
-                theme === "dark" ? "text-pink-400" : "text-pink-500"
-              }`}
-            >
-              Utkarsh Gupta
-            </span>
-            . I am a passionate Full Stack Java Developer with over 3 years of experience in
-            designing and developing cloud-based solutions, RESTful APIs, and scalable applications
-            using <strong>Java</strong>, <strong>Spring Boot</strong>, and <strong>React.js</strong>.
-          </p>
-          <p className="text-lg leading-relaxed">
-            I specialize in building robust backend systems, architecting efficient microservices, 
-            and enhancing user experiences through responsive frontend designs. My expertise extends 
-            to implementing CI/CD pipelines and optimizing application performance for high traffic systems.
-          </p>
-          <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-            {/* Download CV Button */}
-            <a
-              href="https://drive.google.com/file/d/17ojbF_N-aUtY3Ae2Jas3BTxS3EMxoZQy/view?usp=sharing"
-              target="_blank"
-              rel="noopener noreferrer"
-              className={`px-6 py-3 rounded-lg text-lg font-semibold text-white shadow-lg transition transform hover:scale-105 active:translate-y-1 bg-gradient-to-r from-purple-600 to-indigo-500 hover:shadow-xl`}
-            >
-              Download CV
-            </a>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+          className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-8"
+        >
+          <div className="space-y-6">
+            <p className="text-lg leading-relaxed">
+              Hi, I'm <span className="font-semibold text-blue-600 dark:text-blue-400">Utkarsh Gupta</span> — a Full Stack Java Developer with 3+ years of experience building scalable apps using Java, Spring Boot, and React.js.
+            </p>
 
-            {/* Hire Me Button */}
-            <a
-              href="#contact"
-              className={`px-6 py-3 rounded-lg text-lg font-semibold text-white shadow-lg transition transform hover:scale-105 active:translate-y-1 bg-gradient-to-r from-purple-600 to-indigo-500 hover:shadow-xl`}
-            >
-              Hire Me
-            </a>
+            <p className="text-lg leading-relaxed">
+              While I've delivered clean, efficient code and robust backend systems, I've found my true strength lies in solving real business problems, collaborating across teams, and enhancing user experience. This has inspired my transition into Product Support Consulting.
+            </p>
+
+            <p className="text-lg leading-relaxed">
+              I'm passionate about bridging the gap between technology and user needs—using my dev background to troubleshoot effectively, analyze data, and improve customer journeys. Backed by Google Ads certification, IT consulting experience, and self-driven case studies, I'm ready to drive impact at the intersection of tech and strategy.
+            </p>
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

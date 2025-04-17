@@ -1,0 +1,52 @@
+.case-study-slider {
+  padding: 20px 0;
+}
+
+.case-study-slider .slick-dots {
+  bottom: -30px;
+}
+
+.case-study-slider .slick-dots li button:before {
+  color: #fff;
+  opacity: 0.5;
+}
+
+.case-study-slider .slick-dots li.slick-active button:before {
+  color: #eab308;
+  opacity: 1;
+}
+
+.case-study-slider .slick-prev,
+.case-study-slider .slick-next {
+  z-index: 1;
+  width: 40px;
+  height: 40px;
+}
+
+.case-study-slider .slick-prev {
+  left: -50px;
+}
+
+.case-study-slider .slick-next {
+  right: -50px;
+}
+
+.case-study-slider .slick-prev:before,
+.case-study-slider .slick-next:before {
+  font-size: 40px;
+  color: #eab308;
+}
+
+.case-study-slider .slick-slide {
+  padding: 0 10px;
+}
+
+@media (max-width: 768px) {
+  .case-study-slider .slick-prev {
+    left: -20px;
+  }
+  
+  .case-study-slider .slick-next {
+    right: -20px;
+  }
+} 

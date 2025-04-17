@@ -1,67 +1,103 @@
-import React from "react";
+import React, { useContext } from "react";
+import { ThemeContext } from "../context/ThemeContext";
 
-const Home = ({ theme }) => {
+const Home = () => {
+  const { currentTheme, themes } = useContext(ThemeContext);
+  const theme = themes[currentTheme];
+
+  const getGradientOverlay = () => {
+    switch (currentTheme) {
+      case 'light':
+        return 'from-white/50 to-gray-100/50';
+      case 'dark':
+        return 'from-gray-900/50 to-gray-800/50';
+      case 'pastelPink':
+        return 'from-pink-50/50 to-pink-100/50';
+      case 'pastelBlue':
+        return 'from-blue-50/50 to-blue-100/50';
+      case 'pastelGreen':
+        return 'from-green-50/50 to-green-100/50';
+      case 'pastelPurple':
+        return 'from-purple-50/50 to-purple-100/50';
+      default:
+        return 'from-pink-50/50 to-pink-100/50';
+    }
+  };
+
+  const getButtonStyles = () => {
+    switch (currentTheme) {
+      case 'light':
+        return {
+          primary: 'border-gray-300 hover:bg-gray-100/50',
+          secondary: 'bg-gray-100/80 hover:bg-gray-200/80'
+        };
+      case 'dark':
+        return {
+          primary: 'border-gray-600 hover:bg-gray-800/50',
+          secondary: 'bg-gray-800/80 hover:bg-gray-700/80'
+        };
+      case 'pastelPink':
+        return {
+          primary: 'border-pink-300 hover:bg-pink-100/50',
+          secondary: 'bg-pink-100/80 hover:bg-pink-200/80'
+        };
+      case 'pastelBlue':
+        return {
+          primary: 'border-blue-300 hover:bg-blue-100/50',
+          secondary: 'bg-blue-100/80 hover:bg-blue-200/80'
+        };
+      case 'pastelGreen':
+        return {
+          primary: 'border-green-300 hover:bg-green-100/50',
+          secondary: 'bg-green-100/80 hover:bg-green-200/80'
+        };
+      case 'pastelPurple':
+        return {
+          primary: 'border-purple-300 hover:bg-purple-100/50',
+          secondary: 'bg-purple-100/80 hover:bg-purple-200/80'
+        };
+      default:
+        return {
+          primary: 'border-pink-300 hover:bg-pink-100/50',
+          secondary: 'bg-pink-100/80 hover:bg-pink-200/80'
+        };
+    }
+  };
+
+  const buttonStyles = getButtonStyles();
+
   return (
     <section
       id="home"
-      className="h-screen flex items-center"
-      style={{
-        backgroundImage:
-          theme === "dark"
-            ? "linear-gradient(135deg, #1e3a8a, #2c2c54)" // Gradient for dark theme
-            : "linear-gradient(135deg, #f8b500, #f54ea2)", // Gradient for light theme
-        color: "var(--text-color)", // Dynamic text color
-      }}
+      className={`min-h-screen flex items-center justify-center ${theme.colors.primary} transition-colors duration-300 relative overflow-hidden`}
     >
-      <div className="container mx-auto text-center">
-        {/* 3D Styled Title */}
-        <h1
-          className="text-4xl md:text-6xl font-bold relative inline-block"
-          style={{
-            textShadow: theme === "dark" ? "2px 2px 10px #000" : "2px 2px 10px #ccc",
-          }}
-        >
-          Hi, I'm <span className="text-accent">Utkarsh Gupta</span>
-        </h1>
-
-        {/* Subtext */}
-        <p className="mt-4 text-lg md:text-xl">
-          Full Stack Java Developer specializing in optimized and scalable solutions.
-        </p>
-
-        {/* Buttons */}
-        <div className="mt-8 flex justify-center space-x-4">
-          <a
-            href="#projects"
-            className="px-8 py-4 text-lg font-medium rounded-lg shadow-lg hover:shadow-xl transition-shadow"
-            style={{
-              backgroundImage:
-                theme === "dark"
-                  ? "linear-gradient(45deg, #81c784, #66bb6a)"
-                  : "linear-gradient(45deg, #ff9f43, #ff6b81)", // Button gradient
-              color: "var(--button-text)",
-              border: "none",
-              boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.3)", // Subtle shadow
-            }}
+      {/* Gradient overlay for enhanced effect */}
+      <div className={`absolute inset-0 bg-gradient-to-br ${getGradientOverlay()} mix-blend-overlay`}></div>
+      
+      <div className="container mx-auto px-4 py-16 relative z-10">
+        <div className="max-w-3xl mx-auto text-center">
+          <h1
+            className={`text-5xl md:text-6xl font-bold mb-6 ${theme.colors.text} drop-shadow-lg`}
           >
-            View My Work
-          </a>
-
-          <a
-            href="#contact"
-            className="px-8 py-4 text-lg font-medium rounded-lg shadow-lg hover:shadow-xl transition-shadow"
-            style={{
-              backgroundImage:
-                theme === "dark"
-                  ? "linear-gradient(45deg, #64b5f6, #42a5f5)"
-                  : "linear-gradient(45deg, #fbc2eb, #a18cd1)", // Alternative button gradient
-              color: "var(--button-text)",
-              border: "none",
-              boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.3)", // Subtle shadow
-            }}
-          >
-            Contact Me
-          </a>
+            Hi, I'm Utkarsh Gupta
+          </h1>
+          <p className={`text-xl md:text-2xl mb-8 ${theme.colors.text} drop-shadow-sm`}>
+            A passionate software developer and consultant
+          </p>
+          <div className="flex justify-center space-x-4">
+            <a
+              href="#contact"
+              className={`px-6 py-3 rounded-lg ${theme.colors.accent} border-2 ${buttonStyles.primary} transition-all duration-300 shadow-sm hover:shadow-md`}
+            >
+              Get in Touch
+            </a>
+            <a
+              href="#projects"
+              className={`px-6 py-3 rounded-lg ${buttonStyles.secondary} ${theme.colors.text} transition-all duration-300 shadow-sm hover:shadow-md`}
+            >
+              View My Work
+            </a>
+          </div>
         </div>
       </div>
     </section>
