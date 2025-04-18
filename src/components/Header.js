@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { FaPalette } from "react-icons/fa";
+import { FaBars, FaTimes } from "react-icons/fa";
 import { ThemeContext } from "../context/ThemeContext";
 
 const Header = () => {
@@ -8,7 +8,7 @@ const Header = () => {
   const [activeSection, setActiveSection] = useState("");
   const location = useLocation();
   const navigate = useNavigate();
-  const { currentTheme, themes, toggleTheme } = useContext(ThemeContext);
+  const { currentTheme, themes } = useContext(ThemeContext);
   const theme = themes[currentTheme];
 
   useEffect(() => {
@@ -54,122 +54,66 @@ const Header = () => {
   ];
 
   return (
-    <header className={`fixed top-0 left-0 right-0 z-50 ${theme.colors.primary} shadow-md`}>
+    <header className={`fixed top-0 left-0 right-0 z-50 ${theme.colors.primary} transition-colors duration-300`}>
       <div className="container mx-auto px-4">
-        <div className="flex justify-between items-center h-16">
-          <Link to="/" className={`text-2xl font-bold ${theme.colors.accent}`}>
-            Utkarsh Gupta
+        <div className="flex items-center justify-between h-16">
+          {/* Logo */}
+          <Link to="/" className="flex items-center">
+            <span className={`text-xl font-bold ${theme.colors.text}`}>Utkarsh Gupta</span>
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
-            <nav className="flex items-center space-x-6">
-              {navLinks.map((link) => (
-                link.section ? (
-                  <a
-                    key={link.name}
-                    href={`#${link.section}`}
-                    onClick={(e) => handleNavClick(e, link.section)}
-                    className={`${
-                      activeSection === link.section
-                        ? theme.colors.accent
-                        : theme.colors.text
-                    } hover:${theme.colors.accent} transition-colors`}
-                  >
-                    {link.name}
-                  </a>
-                ) : (
-                  <Link
-                    key={link.name}
-                    to={link.path}
-                    className={`${theme.colors.text} hover:${theme.colors.accent} transition-colors`}
-                  >
-                    {link.name}
-                  </Link>
-                )
-              ))}
-            </nav>
-            <button
-              onClick={toggleTheme}
-              className={`w-10 h-10 rounded-full flex items-center justify-center ${theme.colors.secondary} hover:${theme.colors.accent} transition-all duration-300 transform hover:scale-110`}
-              aria-label="Toggle theme"
-            >
-              <FaPalette className="w-5 h-5 text-gray-600" />
-            </button>
-          </div>
+          <nav className="hidden md:flex items-center space-x-8">
+            {navLinks.map((link) => (
+              <Link
+                key={link.name}
+                to={link.path || `#${link.section}`}
+                onClick={(e) => link.section && handleNavClick(e, link.section)}
+                className={`text-sm font-medium transition-colors duration-300 ${
+                  activeSection === link.section
+                    ? theme.colors.accent
+                    : theme.colors.text
+                } hover:${theme.colors.accent}`}
+              >
+                {link.name}
+              </Link>
+            ))}
+          </nav>
 
           {/* Mobile Menu Button */}
-          <div className="md:hidden flex items-center space-x-4">
-            <button
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className={`w-10 h-10 rounded-full flex items-center justify-center ${theme.colors.secondary} hover:${theme.colors.accent} transition-all duration-300`}
-            >
-              <svg
-                className="w-6 h-6"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                {isMenuOpen ? (
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                ) : (
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M4 6h16M4 12h16M4 18h16"
-                  />
-                )}
-              </svg>
-            </button>
-          </div>
+          <button
+            className="md:hidden p-2"
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            aria-label="Toggle menu"
+          >
+            {isMenuOpen ? (
+              <FaTimes className={`w-6 h-6 ${theme.colors.text}`} />
+            ) : (
+              <FaBars className={`w-6 h-6 ${theme.colors.text}`} />
+            )}
+          </button>
         </div>
 
         {/* Mobile Navigation */}
         {isMenuOpen && (
-          <nav className="md:hidden absolute top-16 left-0 right-0 bg-white dark:bg-gray-900 shadow-lg">
-            <div className="container mx-auto px-4 py-4">
-              <div className="flex flex-col space-y-4">
-                {navLinks.map((link) => (
-                  link.section ? (
-                    <a
-                      key={link.name}
-                      href={`#${link.section}`}
-                      onClick={(e) => handleNavClick(e, link.section)}
-                      className={`${
-                        activeSection === link.section
-                          ? theme.colors.accent
-                          : theme.colors.text
-                      } hover:${theme.colors.accent} transition-colors py-2`}
-                    >
-                      {link.name}
-                    </a>
-                  ) : (
-                    <Link
-                      key={link.name}
-                      to={link.path}
-                      className={`${theme.colors.text} hover:${theme.colors.accent} transition-colors py-2`}
-                      onClick={() => setIsMenuOpen(false)}
-                    >
-                      {link.name}
-                    </Link>
-                  )
-                ))}
-                <button
-                  onClick={toggleTheme}
-                  className={`w-10 h-10 rounded-full flex items-center justify-center ${theme.colors.secondary} hover:${theme.colors.accent} transition-all duration-300 transform hover:scale-110`}
-                  aria-label="Toggle theme"
+          <div className={`md:hidden ${theme.colors.primary} transition-colors duration-300`}>
+            <div className="px-2 pt-2 pb-3 space-y-1">
+              {navLinks.map((link) => (
+                <Link
+                  key={link.name}
+                  to={link.path || `#${link.section}`}
+                  onClick={(e) => link.section && handleNavClick(e, link.section)}
+                  className={`block px-3 py-2 rounded-md text-base font-medium ${
+                    activeSection === link.section
+                      ? theme.colors.accent
+                      : theme.colors.text
+                  } hover:${theme.colors.accent}`}
                 >
-                  <FaPalette className="w-5 h-5 text-gray-600" />
-                </button>
-              </div>
+                  {link.name}
+                </Link>
+              ))}
             </div>
-          </nav>
+          </div>
         )}
       </div>
     </header>

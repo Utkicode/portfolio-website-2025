@@ -1,18 +1,20 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useParams, Link } from "react-router-dom";
 import { caseStudies } from "../data/caseStudies";
+import { ThemeContext } from "../context/ThemeContext";
 
 const CaseStudyDetail = () => {
   const { id } = useParams();
+  const { theme } = useContext(ThemeContext);
   const study = caseStudies.find(study => study.id === id);
 
   if (!study) {
     return (
-      <div className="min-h-screen bg-gray-800 text-white py-20 px-4 md:px-8 lg:px-16">
+      <div className={`min-h-screen pt-24 px-4 md:px-8 lg:px-16 ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-gray-900'}`}>
         <div className="container mx-auto text-center">
-          <h1 className="text-3xl font-bold mb-6">Case Study Not Found</h1>
-          <Link to="/#projects" className="text-yellow-500 hover:underline">
-            Back to Projects
+          <h1 className={`text-3xl font-bold mb-6 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>Case Study Not Found</h1>
+          <Link to="/case-studies" className={`${theme === 'dark' ? 'text-yellow-500 hover:text-yellow-400' : 'text-blue-600 hover:text-blue-500'}`}>
+            Back to Case Studies
           </Link>
         </div>
       </div>
@@ -20,18 +22,21 @@ const CaseStudyDetail = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-800 text-white py-20 px-4 md:px-8 lg:px-16">
+    <div className={`min-h-screen pt-24 px-4 md:px-8 lg:px-16 ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-gray-900'}`}>
       <div className="container mx-auto max-w-6xl">
-        <Link to="/#projects" className="text-yellow-500 hover:underline mb-8 inline-block">
-          ← Back to Projects
+        <Link 
+          to="/case-studies" 
+          className={`inline-block mb-8 ${theme === 'dark' ? 'text-yellow-500 hover:text-yellow-400' : 'text-blue-600 hover:text-blue-500'}`}
+        >
+          ← Back to Case Studies
         </Link>
         
-        <h1 className="text-4xl font-bold mb-8">{study.name}</h1>
+        <h1 className={`text-4xl font-bold mb-8 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>{study.name}</h1>
 
-        <div className="md:flex gap-8">
+        <div className="flex flex-col md:flex-row gap-8">
           {/* Image Section */}
           <div className="md:w-1/3">
-            <div className="rounded-lg overflow-hidden shadow-xl sticky top-8">
+            <div className={`rounded-lg overflow-hidden shadow-xl sticky top-8 ${theme === 'dark' ? 'bg-gray-800' : 'bg-gray-100'}`}>
               <img 
                 src={study.detailImage} 
                 alt={study.imageAlt}
@@ -41,25 +46,25 @@ const CaseStudyDetail = () => {
           </div>
 
           {/* Content Section */}
-          <div className="md:w-2/3 mt-6 md:mt-0">
+          <div className="md:w-2/3">
             <section className="mb-8">
-              <h2 className="text-2xl font-semibold mb-4 text-yellow-500">Overview</h2>
-              <p className="text-gray-300">{study.overview}</p>
+              <h2 className={`text-2xl font-semibold mb-4 ${theme === 'dark' ? 'text-yellow-500' : 'text-blue-600'}`}>Overview</h2>
+              <p className={`${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>{study.overview}</p>
             </section>
 
             <section className="mb-8">
-              <h2 className="text-2xl font-semibold mb-4 text-yellow-500">Problem</h2>
-              <p className="text-gray-300">{study.problem}</p>
+              <h2 className={`text-2xl font-semibold mb-4 ${theme === 'dark' ? 'text-yellow-500' : 'text-blue-600'}`}>Problem</h2>
+              <p className={`${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>{study.problem}</p>
             </section>
 
             <section className="mb-8">
-              <h2 className="text-2xl font-semibold mb-4 text-yellow-500">Solution</h2>
-              <p className="text-gray-300">{study.solution}</p>
+              <h2 className={`text-2xl font-semibold mb-4 ${theme === 'dark' ? 'text-yellow-500' : 'text-blue-600'}`}>Solution</h2>
+              <p className={`${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>{study.solution}</p>
             </section>
 
             <section className="mb-8">
-              <h2 className="text-2xl font-semibold mb-4 text-yellow-500">Key Features</h2>
-              <ul className="list-disc list-inside text-gray-300 space-y-2">
+              <h2 className={`text-2xl font-semibold mb-4 ${theme === 'dark' ? 'text-yellow-500' : 'text-blue-600'}`}>Key Features</h2>
+              <ul className={`list-disc list-inside space-y-2 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
                 {study.keyFeatures.map((feature, index) => (
                   <li key={index}>{feature}</li>
                 ))}
@@ -67,8 +72,8 @@ const CaseStudyDetail = () => {
             </section>
 
             <section className="mb-8">
-              <h2 className="text-2xl font-semibold mb-4 text-yellow-500">Business Impact</h2>
-              <ul className="list-disc list-inside text-gray-300 space-y-2">
+              <h2 className={`text-2xl font-semibold mb-4 ${theme === 'dark' ? 'text-yellow-500' : 'text-blue-600'}`}>Business Impact</h2>
+              <ul className={`list-disc list-inside space-y-2 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
                 {study.businessImpact.map((impact, index) => (
                   <li key={index}>{impact}</li>
                 ))}
@@ -76,8 +81,8 @@ const CaseStudyDetail = () => {
             </section>
 
             <section className="mb-8">
-              <h2 className="text-2xl font-semibold mb-4 text-yellow-500">Tools & Approach</h2>
-              <ul className="list-disc list-inside text-gray-300 space-y-2">
+              <h2 className={`text-2xl font-semibold mb-4 ${theme === 'dark' ? 'text-yellow-500' : 'text-blue-600'}`}>Tools & Approach</h2>
+              <ul className={`list-disc list-inside space-y-2 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
                 {study.toolsList.map((tool, index) => (
                   <li key={index}>{tool}</li>
                 ))}
@@ -85,8 +90,8 @@ const CaseStudyDetail = () => {
             </section>
 
             <section>
-              <h2 className="text-2xl font-semibold mb-4 text-yellow-500">Project Status</h2>
-              <p className="text-gray-300">{study.status}</p>
+              <h2 className={`text-2xl font-semibold mb-4 ${theme === 'dark' ? 'text-yellow-500' : 'text-blue-600'}`}>Project Status</h2>
+              <p className={`${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>{study.status}</p>
             </section>
           </div>
         </div>
