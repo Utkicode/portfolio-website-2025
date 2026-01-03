@@ -38,36 +38,69 @@ export const caseStudies = [
   },
   // Add more case studies here following the same structure
   {
-    id: "example-case-study",
-    name: "Example Case Study",
-    description: "This is an example case study that demonstrates the structure for future additions.",
-    image: "/images/example-image.png",
-    detailImage: "/images/example-detail-image.png",
-    imageAlt: "Example Case Study Interface",
+    id: "product-management-case-study",
+    name: "Product Management Case Study",
+    description: "A comprehensive deep dive into product strategy and execution. (View full details in Notion)",
+    image: "/images/product_management.png",
+    detailImage: "/images/product_management.png",
+    imageAlt: "Product Management Case Study",
     impact: [
-      "Example impact point 1",
-      "Example impact point 2",
-      "Example impact point 3",
+      "Strategic Product Planning",
+      "User-Centric Design",
+      "Data-Driven Decisions"
     ],
-    tools: "Example tools used",
-    overview: "Example overview text",
-    problem: "Example problem statement",
-    solution: "Example solution description",
-    keyFeatures: [
-      "Feature 1",
-      "Feature 2",
-      "Feature 3"
+    tools: "Notion, Product Board, Jira",
+    embedUrl: "https://candied-cent-e7e.notion.site/ebd//1df26bd3b9cd80539c4df287af673bc3",
+    overview: "Content embedded from Notion.",
+    problem: "Content embedded from Notion.",
+    solution: "Content embedded from Notion.",
+    keyFeatures: [],
+    businessImpact: [],
+    toolsList: [],
+    status: "Completed"
+  },
+  {
+    id: "strategic-growth-case-study",
+    name: "Strategic Growth Case Study",
+    description: "Analyzing business metrics to drive sustainable growth. (View full details in Notion)",
+    image: "/images/strategic_growth.png",
+    detailImage: "/images/strategic_growth.png",
+    imageAlt: "Strategic Growth Case Study",
+    impact: [
+      "Market Analysis",
+      "Growth Strategy",
+      "Performance Optimization"
     ],
-    businessImpact: [
-      "Impact 1",
-      "Impact 2",
-      "Impact 3"
+    tools: "Tableau, Excel, Strategizer",
+    embedUrl: "https://candied-cent-e7e.notion.site/ebd//27a26bd3b9cd80afbe23c15c08342d9a",
+    overview: "Content embedded from Notion.",
+    problem: "Content embedded from Notion.",
+    solution: "Content embedded from Notion.",
+    keyFeatures: [],
+    businessImpact: [],
+    toolsList: [],
+    status: "Completed"
+  },
+  {
+    id: "digital-transformation-case-study",
+    name: "Digital Transformation Case Study",
+    description: "End-to-end digital workflow optimization and tooling. (View full details in Notion)",
+    image: "/images/digital_transformation.png",
+    detailImage: "/images/digital_transformation.png",
+    imageAlt: "Digital Transformation Case Study",
+    impact: [
+      "Process Automation",
+      "Tech Stack Modernization",
+      "Efficiency Gains"
     ],
-    toolsList: [
-      "Tool 1",
-      "Tool 2",
-      "Tool 3"
-    ],
-    status: "Example status"
+    tools: "Jira, Salesforce, Slack API",
+    embedUrl: "https://candied-cent-e7e.notion.site/ebd//21826bd3b9cd807baee6fd46f7c549ac",
+    overview: "Content embedded from Notion.",
+    problem: "Content embedded from Notion.",
+    solution: "Content embedded from Notion.",
+    keyFeatures: [],
+    businessImpact: [],
+    toolsList: [],
+    status: "Completed"
   }
 ]; 

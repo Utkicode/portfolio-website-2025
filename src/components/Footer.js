@@ -1,92 +1,96 @@
 import React, { useContext } from "react";
 import { ThemeContext } from "../context/ThemeContext";
-import { FaGithub, FaLinkedin, FaEnvelope } from "react-icons/fa";
+import { portfolioData } from "../data/portfolio";
+import { FaGithub, FaLinkedin, FaEnvelope, FaMapMarkerAlt, FaPhone } from "react-icons/fa";
 
 const Footer = () => {
   const { theme } = useContext(ThemeContext);
-
-  const socialLinks = [
-    {
-      name: "GitHub",
-      url: "https://github.com/utkicode",
-      icon: <FaGithub className="w-5 h-5" />,
-    },
-    {
-      name: "LinkedIn",
-      url: "https://linkedin.com/in/utkarsh-gupta-b17a44192/",
-      icon: <FaLinkedin className="w-5 h-5" />,
-    },
-   
-    {
-      name: "Email",
-      url: "utkarsh2255.iimt@gmail.com",
-      icon: <FaEnvelope className="w-5 h-5" />,
-    },
-  ];
+  const { contact } = portfolioData;
 
   return (
-    <footer className={`py-8 ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-gray-900'}`}>
+    <footer className={`py-12 border-t ${theme === 'dark' ? 'bg-gray-900 border-gray-800 text-gray-300' : 'bg-gray-50 border-gray-200 text-gray-700'}`}>
       <div className="container mx-auto px-4">
-        <div className="flex flex-col md:flex-row justify-between items-center">
-          {/* Social Links */}
-          <div className="flex space-x-6 mb-4 md:mb-0">
-            {socialLinks.map((link) => (
-              <a
-                key={link.name}
-                href={link.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={`transition-colors duration-300 ${
-                  theme === 'dark'
-                    ? 'text-gray-400 hover:text-white'
-                    : 'text-gray-600 hover:text-gray-900'
-                }`}
-                aria-label={link.name}
-              >
-                {link.icon}
-              </a>
-            ))}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+          {/* Column 1: Brand */}
+          <div>
+            <h3 className={`text-2xl font-bold mb-4 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
+              Utkarsh Gupta
+            </h3>
+            <p className="mb-4 text-sm leading-relaxed">
+              Helping businesses solve complex problems through technology and strategic consulting.
+            </p>
+            <p className="text-sm">
+              © {new Date().getFullYear()} Utkarsh Gupta.<br />All rights reserved.
+            </p>
           </div>
 
-          {/* Copyright */}
-          <div className={`text-sm ${
-            theme === 'dark' ? 'text-gray-400' : 'text-gray-600'
-          }`}>
-            © {new Date().getFullYear()} Utkarsh Gupta. All rights reserved.
+          {/* Column 2: Quick Links */}
+          <div>
+            <h4 className={`text-lg font-semibold mb-6 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
+              Quick Links
+            </h4>
+            <ul className="space-y-3 text-sm">
+              <li><a href="/" className="hover:text-blue-500 transition-colors">Home</a></li>
+              <li><a href="/#about" className="hover:text-blue-500 transition-colors">About</a></li>
+              <li><a href="/#projects" className="hover:text-blue-500 transition-colors">Projects</a></li>
+              <li><a href="/case-studies" className="hover:text-blue-500 transition-colors">Case Studies</a></li>
+              <li><a href="/#contact" className="hover:text-blue-500 transition-colors">Contact</a></li>
+            </ul>
           </div>
 
-          {/* Quick Links */}
-          <div className="flex space-x-6 mt-4 md:mt-0">
-            <a
-              href="#about"
-              className={`text-sm transition-colors duration-300 ${
-                theme === 'dark'
-                  ? 'text-gray-400 hover:text-white'
-                  : 'text-gray-600 hover:text-gray-900'
-              }`}
-            >
-              About
-            </a>
-            <a
-              href="#projects"
-              className={`text-sm transition-colors duration-300 ${
-                theme === 'dark'
-                  ? 'text-gray-400 hover:text-white'
-                  : 'text-gray-600 hover:text-gray-900'
-              }`}
-            >
-              Projects
-            </a>
-            <a
-              href="#contact"
-              className={`text-sm transition-colors duration-300 ${
-                theme === 'dark'
-                  ? 'text-gray-400 hover:text-white'
-                  : 'text-gray-600 hover:text-gray-900'
-              }`}
-            >
+          {/* Column 3: Contact Info */}
+          <div>
+            <h4 className={`text-lg font-semibold mb-6 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
               Contact
-            </a>
+            </h4>
+            <ul className="space-y-4 text-sm">
+              <li className="flex items-center space-x-3">
+                <FaEnvelope className="text-blue-500" />
+                <a href={`mailto:${contact.email}`} className="hover:text-blue-500 transition-colors">
+                  {contact.email}
+                </a>
+              </li>
+              <li className="flex items-center space-x-3">
+                <FaPhone className="text-blue-500" />
+                <span>{contact.phone}</span>
+              </li>
+              <li className="flex items-center space-x-3">
+                <FaMapMarkerAlt className="text-blue-500" />
+                <span>{contact.location}</span>
+              </li>
+            </ul>
+          </div>
+
+          {/* Column 4: Connect */}
+          <div>
+            <h4 className={`text-lg font-semibold mb-6 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
+              Connect
+            </h4>
+            <p className="mb-6 text-sm">
+              Open for collaborations and consulting opportunities. Let's build something great together.
+            </p>
+            <div className="flex space-x-4">
+              {contact.socialLinks.linkedin && (
+                <a
+                  href={contact.socialLinks.linkedin}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`p-3 rounded-full transition-colors ${theme === 'dark' ? 'bg-gray-800 hover:bg-blue-600 text-white' : 'bg-gray-200 hover:bg-blue-600 hover:text-white text-gray-700'}`}
+                >
+                  <FaLinkedin size={20} />
+                </a>
+              )}
+              {contact.socialLinks.github && (
+                <a
+                  href={contact.socialLinks.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`p-3 rounded-full transition-colors ${theme === 'dark' ? 'bg-gray-800 hover:bg-gray-700 text-white' : 'bg-gray-200 hover:bg-gray-300 hover:text-black text-gray-700'}`}
+                >
+                  <FaGithub size={20} />
+                </a>
+              )}
+            </div>
           </div>
         </div>
       </div>

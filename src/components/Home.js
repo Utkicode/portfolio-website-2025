@@ -1,19 +1,14 @@
 import React, { useContext, useState, useEffect } from "react";
 import { ThemeContext } from "../context/ThemeContext";
 import { motion, AnimatePresence } from "framer-motion";
+import { portfolioData } from "../data/portfolio";
 
 const Home = () => {
   const { currentTheme, themes } = useContext(ThemeContext);
   const theme = themes[currentTheme];
   const [currentLine, setCurrentLine] = useState(0);
 
-  const punchLines = [
-    "I solve real-world problems with tech, empathy, and strategy.",
-    "From Developer to Problem Solver — I turn user pain points into business wins.",
-    "A passionate software developer and consultant.",
-    "Where product support meets real-world innovation.",
-    "Developer by craft, consultant by choice."
-  ];
+  const { punchLines, heroTitle } = portfolioData.home;
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -91,7 +86,7 @@ const Home = () => {
     >
       {/* Gradient overlay for enhanced effect */}
       <div className={`absolute inset-0 bg-gradient-to-br ${getGradientOverlay()} mix-blend-overlay`}></div>
-      
+
       <div className="container mx-auto px-4 py-16 relative z-10">
         <div className="max-w-3xl mx-auto text-center">
           <motion.h1
@@ -100,9 +95,9 @@ const Home = () => {
             transition={{ duration: 0.5 }}
             className={`text-5xl md:text-6xl font-bold mb-6 ${theme.colors.text} drop-shadow-lg`}
           >
-            Hi, I'm Utkarsh Gupta
+            {heroTitle}
           </motion.h1>
-          
+
           <div className="h-24 md:h-20 flex items-center justify-center">
             <AnimatePresence mode="wait">
               <motion.p

@@ -1,7 +1,9 @@
 import React, { useState } from "react";
+import { portfolioData } from "../data/portfolio";
 
 const Contact = () => {
   const [status, setStatus] = useState(""); // State for form submission status
+  const { contact } = portfolioData;
 
   const handleSubmit = async (e) => {
     e.preventDefault(); // Prevent the form from redirecting
@@ -11,7 +13,7 @@ const Contact = () => {
     const payload = Object.fromEntries(formData.entries()); // Convert form data to JSON
 
     try {
-      const response = await fetch("https://formspree.io/f/mvggwggj", {
+      const response = await fetch(contact.formspreeEndpoint, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -41,21 +43,21 @@ const Contact = () => {
           {/* Contact Info */}
           <div className="w-full lg:w-1/3 card shadow-md rounded-lg p-8 text-left">
             <h3 className="text-2xl font-semibold mb-6">Contact Information</h3>
-            <p className="mb-4">📍 <strong>Location:</strong> New Delhi, India</p>
+            <p className="mb-4">📍 <strong>Location:</strong> {contact.location}</p>
             <p className="mb-4">
               📧 <strong>Email:</strong>{" "}
               <a
-                href="mailto:utkarshgupta2255@gmail.com"
+                href={`mailto:${contact.email}`}
                 className="text-blue-500 hover:underline"
               >
-                utkarsh2255.iimt@gmail.com
+                {contact.email}
               </a>
             </p>
-            <p className="mb-4">📞 <strong>Phone:</strong> +91 90122 36502</p>
+            <p className="mb-4">📞 <strong>Phone:</strong> {contact.phone}</p>
             <p>
               🌐 <strong>LinkedIn:</strong>{" "}
               <a
-                href="https://www.linkedin.com/in/utkarsh-gupta-b17a44192"
+                href={contact.socialLinks.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-blue-500 hover:underline"

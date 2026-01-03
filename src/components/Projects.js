@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { caseStudies } from "../data/caseStudies";
+import { portfolioData } from "../data/portfolio";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -13,6 +14,8 @@ const Projects = () => {
   const location = useLocation();
   const [showPopup, setShowPopup] = useState(false);
   const [popupMessage, setPopupMessage] = useState("");
+
+  const { projects: technicalProjects = [] } = portfolioData || {};
 
   const funMessages = [
     "🚧 Whoops! This project is still under construction! The developers are busy drinking coffee and debugging! 🚧",
@@ -31,30 +34,6 @@ const Projects = () => {
       window.open(project.link, "_blank");
     }
   };
-
-  const technicalProjects = [
-    {
-      name: "B2B & B2C Learning Platform",
-      description: "A scalable platform built with Spring Boot and React.js.",
-      link: "#",
-      isTechnical: true,
-      image: "https://placehold.co/600x400/1a1a1a/ffffff?text=Learning+Platform"
-    },
-    {
-      name: "Bug Tracking App",
-      description: "Streamlined developer and QA workflows.",
-      link: "#",
-      isTechnical: true,
-      image: "https://placehold.co/600x400/1a1a1a/ffffff?text=Bug+Tracking"
-    },
-    {
-      name: "MongoDB POC",
-      description: "Implemented features leveraging MongoDB Atlas Search.",
-      link: "#",
-      isTechnical: true,
-      image: "https://placehold.co/600x400/1a1a1a/ffffff?text=MongoDB+POC"
-    },
-  ];
 
   const settings = {
     dots: true,
@@ -90,9 +69,8 @@ const Projects = () => {
   return (
     <section
       id="projects"
-      className={`min-h-screen py-20 px-4 ${
-        isProjectsPage ? "pt-32" : ""
-      }`}
+      className={`min-h-screen py-20 px-4 ${isProjectsPage ? "pt-32" : ""
+        }`}
     >
       <div className="max-w-7xl mx-auto">
         <motion.h2
@@ -105,7 +83,7 @@ const Projects = () => {
         </motion.h2>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {technicalProjects.map((project, index) => (
+          {technicalProjects?.map((project, index) => (
             <motion.div
               key={index}
               initial={{ opacity: 0, y: 20 }}

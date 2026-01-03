@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, useLocation } from "react-route
 import Header from "./components/Header";
 import Home from "./components/Home";
 import About from "./components/About";
+import WhyHireMe from "./components/WhyHireMe";
 import Skills from "./components/Skills";
 import Projects from "./components/Projects";
 import Contact from "./components/Contact";
@@ -14,7 +15,7 @@ import { ThemeProvider } from "./context/ThemeContext";
 
 function AppContent() {
   const location = useLocation();
-  const showFooter = !['/why-consulting', '/case-studies', '/case-study'].some(path => 
+  const showFooter = !['/why-consulting', '/case-studies', '/case-study'].some(path =>
     location.pathname.startsWith(path)
   );
 
@@ -28,6 +29,7 @@ function AppContent() {
             <>
               <Home />
               <About />
+              <WhyHireMe />
               <Skills />
               <Projects />
               <Contact />
