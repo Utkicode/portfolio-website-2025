@@ -74,8 +74,8 @@ const WhyHireMe = () => {
                             variants={cardVariants}
                             whileHover="hover"
                             className={`p-8 rounded-xl border ${theme === "dark"
-                                    ? "bg-gray-900 border-gray-700 text-gray-300"
-                                    : "bg-gray-50 border-gray-100 text-gray-700"
+                                ? "bg-gray-900 border-gray-700 text-gray-300"
+                                : "bg-gray-50 border-gray-100 text-gray-700"
                                 } transition-colors duration-300`}
                         >
                             <div className="text-blue-600 dark:text-blue-400">
@@ -89,6 +89,31 @@ const WhyHireMe = () => {
                             </p>
                         </motion.div>
                     ))}
+                </motion.div>
+
+                <motion.div
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.2 }}
+                    className="mt-20 text-center"
+                >
+                    <h3 className={`text-2xl font-bold mb-8 ${theme === "dark" ? "text-white" : "text-gray-900"}`}>
+                        Featured Update
+                    </h3>
+                    <div className="flex justify-center">
+                        <div className="rounded-xl overflow-hidden shadow-lg bg-white">
+                            <iframe
+                                src="https://www.linkedin.com/embed/feed/update/urn:li:share:7316685733824471040?collapsed=1"
+                                height="263"
+                                width="504"
+                                frameBorder="0"
+                                allowFullScreen=""
+                                title="Embedded post"
+                                className="max-w-full"
+                            />
+                        </div>
+                    </div>
                 </motion.div>
             </div>
         </section>
